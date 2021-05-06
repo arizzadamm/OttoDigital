@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<OttoDigital.Areas.Identity.Data.OttoDigitalUser> SignInManager;
+
+
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OttoDigital</a>
+    <a>
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+
+            <a class="nav-link" asp-controller="Administration" asp-action="ListRoles">
+                Manage Roles
+            </a>
+            <a class="nav-link" href="/Identity/Account/Register">
+                Register User
+            </a>
+        }
+    </a>
+</ul>
+
+<script type="text/javascript">
+    $(function () {
+        SetNavigation();
+    });
+    function SetNavigation() {
+        var path = window.location.pathname;
+        path = path.replace(/\/$/, "");
+        path = decodeURIComponent(path);
+
+        $(".nav a").each(function () {
+            var href = $(this).attr('href');
+            if (path.substring(0, href.length) === href) {
+                $(this).closest('a').removeClass('nav-link active');
+                $(this).closest('a').addClass('nav-link active');
+            }
+        });
+
+    }
+</script>

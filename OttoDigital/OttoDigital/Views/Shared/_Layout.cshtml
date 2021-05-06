@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<OttoDigital.Areas.Identity.Data.OttoDigitalUser> SignInManager;
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OttoDigital</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css/StyleSheet.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.dataTables.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OttoDigital</a>
+                <a>
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+
+                        <a class="nav-link" asp-controller="Administration" asp-action="ListRoles">
+                            Manage Roles
+                        </a>
+                        <a class="nav-link" href="/Identity/Account/Register">
+                            Register User
+                        </a>
+                    }
+                </a>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial.cshtml" />
+                </div>
+            </div>
+        </nav>
+    </header>
+        <div class="d-flex" id="wrapper">
+            <div class="bg-light border-light" id="sidebar-wrapper">
+                <div class="sidebar-heading">Dashboard</div>
+                <div class="list-group list-group-flush">
+                    <a>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <a class="list-group-item list-group-item-action bg-light" asp-controller="Home" asp-action="IndexOperation">Index Operation</a>
+
+                        }
+                    </a>
+                    <a>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <a class="list-group-item list-group-item-action bg-light" asp-controller="Home" asp-action="IndexSales">Index Sales</a>
+
+                        }
+                    </a>
+                    <a>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Operation"))
+                        {
+                            <a class="list-group-item list-group-item-action bg-light" asp-controller="Home" asp-action="IndexOperation">Index Operation</a>
+
+                        }
+                    </a>
+                    <a>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Sales"))
+                        {
+                            <a class="list-group-item list-group-item-action bg-light" asp-controller="Home" asp-action="IndexSales">Index Sales</a>
+
+                        }
+                    </a>
+                </div>
+            </div>
+            <div id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <button type="button" id="menu-toggle" class="btn btn-primary">
+                        <i class="fa fa-bars"></i>
+                        <span class="sr-only">Toggle Menu</span>
+                    </button>
+                </nav>
+                <div class="container-fluid">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
+
+            <footer class="border-top footer text-muted">
+                <div class="container">
+                    &copy; 2021 - OttoDigital - <a asp-area="" asp-controller="Home" asp-action="Privacy">Created by Ariza</a>
+                </div>
+            </footer>
+
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            <script>
+            $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+
+            });
+            </script>
+            <!--jquery-->
+
+            @RenderSection("Scripts", required: false)
+        </div>
+</body>
+</html>
